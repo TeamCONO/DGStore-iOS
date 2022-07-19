@@ -13,7 +13,7 @@ struct ContentView: View {
     @State private var searchText = ""
     var body: some View {
         NavigationView {
-            List {
+            ScrollView {
                 /*
                 Button(action: { print("안뇽") }) {
                     HStack {
@@ -50,15 +50,13 @@ struct ContentView: View {
                             Text(value["platform"]!)
                         }
                         .foregroundColor(Color(.label))
-                        .padding(EdgeInsets(top: 15, leading: 20, bottom: 17, trailing: 0))
+                        .padding(EdgeInsets(top: 15, leading: 20, bottom: 17, trailing: 20))
                     }
                     .onTapGesture{ showModal = true }
                     .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 24))
-                    .padding(EdgeInsets(top: 10, leading: 20, bottom: 15, trailing: 20))
-                    .shadow(radius: 30, x: 0, y: 20)
-                    .listRowInsets(.init())
-                    .listRowSeparator(.hidden)
+                    .padding(EdgeInsets(top: 10, leading: 20, bottom: 0, trailing: 20))
+                    .shadow(color: Color.black.opacity(0.2), radius: 15, x: 0, y: 10)
                     .sheet(isPresented: self.$showModal) {
                         ScreenView(swTitle: value["title"]!)
                     }
@@ -66,13 +64,17 @@ struct ContentView: View {
             }
             .searchable(text: $searchText)
             .navigationBarTitle("스토어")
-            .refreshable { print("refreshed") }
-            .listStyle(PlainListStyle())
                 .onAppear {
                     itemList.append([
                         "title": "Rolling Root",
                         "developer": "406SOFT",
                         "image": "Geunho",
+                        "platform": "iOS",
+                    ])
+                    itemList.append([
+                        "title": "도담도담",
+                        "developer": "B1ND",
+                        "image": "Dodam",
                         "platform": "iOS",
                     ])
             }
