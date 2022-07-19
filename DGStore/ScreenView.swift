@@ -17,7 +17,7 @@ struct ScreenView: View {
                 .frame(height: 190)
                 .frame(maxWidth: .infinity)
                 .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
-            Text("Rolling Root")
+            Text(swTitle)
                 .font(.system(size: 40, weight: .bold, design: .default))
                 .padding(20)
             Spacer()

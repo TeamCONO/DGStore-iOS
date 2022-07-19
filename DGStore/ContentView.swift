@@ -14,26 +14,8 @@ struct ContentView: View {
     @State private var searchText = ""
     var body: some View {
         NavigationView {
-            ScrollView {
-                /*
-                Button(action: { print("안뇽") }) {
-                    HStack {
-                        Image(systemName: "person.circle.fill")
-                            .resizable()
-                            .frame(width: 70, height: 70)
-                            .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 10))
-                        Text("로그인하세요")
-                            .font(.system(size: 20, weight: .bold, design: .default))
-                        Spacer()
-                    }
-                }
-                .foregroundColor(.white)
-                .frame(height: 100)
-                .frame(maxWidth: .infinity)
-                .background(Color(.secondaryLabel))
-                .clipShape(RoundedRectangle(cornerRadius: 24))
-                 */
-                ForEach(itemList, id: \.self) { value in
+            List {
+                ForEach(viewList, id: \.self) { value in
                     Button(action: { showModal = true }) {
                         VStack(spacing: 0) {
                             Image(value["image"]!)
@@ -58,15 +40,20 @@ struct ContentView: View {
                     }
                     .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 24))
-                    .padding(EdgeInsets(top: 10, leading: 20, bottom: 0, trailing: 20))
+                    .padding(EdgeInsets(top: 10, leading: 20, bottom: 15, trailing: 20))
                     .shadow(color: Color.black.opacity(0.2), radius: 15, x: 0, y: 10)
+                    .listRowInsets(.init())
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
                     .sheet(isPresented: self.$showModal) {
-                        ScreenView(swTitle: value["title"]!)
+                        ScreenView(swTitle: "도담도담")
                     }
                 }
             }
             .searchable(text: $searchText)
             .navigationBarTitle("스토어")
+            .refreshable { print("refreshed") }
+            .listStyle(PlainListStyle())
                 .onAppear {
                     itemList.append([
                         "title": "Rolling Root",
@@ -84,8 +71,18 @@ struct ContentView: View {
                         "title": "이경태",
                         "developer": "None",
                         "image": "KT",
-                        "framework": "unity",
+                        "framework": "android",
                     ])
+            }
+        }
+    }
+    
+    var viewList: [[String: String]] {
+        if searchText.isEmpty { return itemList }
+        else {
+            return itemList.filter {
+                $0["title"]!.contains(searchText) ||
+                $0["developer"]!.contains(searchText)
             }
         }
     }
