@@ -15,6 +15,16 @@ public struct dataArray: Decodable {
     let title: String
     let developer: String
     let description: String
-    let image: String
+    let thumb: String
     let framework: String
+    let github: String
+    let download: downloadDatas
+}
+
+public struct downloadDatas: Decodable {
+    let windows: String
+    let macos: String
+    let linux: String
+    let android: String
+    let ios: String
 }

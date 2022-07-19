@@ -42,7 +42,7 @@ struct ContentView: View {
                         showModal = true
                     }) {
                         VStack(spacing: 0) {
-                            Image(viewList[i].image)
+                            Image(viewList[i].thumb)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(height: 190)
@@ -81,7 +81,13 @@ struct ContentView: View {
             }
             .searchable(text: $searchText, prompt: "검색")
             .navigationBarTitle("스토어")
-            .refreshable { print("refreshed") }
+            .refreshable {
+                try? AF.request("http://127.0.0.1:80/data", method: .get, encoding: URLEncoding.default).responseData {
+                    guard let value = $0.value else { return }
+                    guard let result = try? decoder.decode(serverData.self, from: value) else { return }
+                    self.itemList = result.list
+                }
+            }
             .listStyle(PlainListStyle())
             .onAppear {
                 UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "취소"

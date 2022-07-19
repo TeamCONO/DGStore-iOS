@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SVGView
 
 struct ScreenView: View {
     var body: some View {
@@ -49,23 +50,36 @@ struct ScreenView: View {
                 Spacer()
             }
             .padding(20)
-            Button(action: { }) {
-                Text("Github")
-                    .font(.system(size: 20, weight: .bold, design: .default))
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 60)
-                    .background(Color.accentColor)
-                    .foregroundColor(Color(.systemBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 24))
-                    .padding(20)
+            HStack {
+                Link(destination: URL(string: selectedIndex?.download.ios ?? "")!) {
+                    Text("다운로드")
+                        .font(.system(size: 20, weight: .bold, design: .default))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 60)
+                        .background(Color.accentColor)
+                        .foregroundColor(Color(.systemBackground))
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                        .isHidden(selectedIndex?.download.ios.isEmpty ?? true, remove: true)
+                }
+                Link(destination: URL(string: selectedIndex?.github ?? "")!) {
+                    SVGView(contentsOf: URL(string: "https://simpleicons.org/icons/github.svg")!)
+                        .frame(width: 30)
+                        .colorInvert()
+                        .font(.system(size: 20, weight: .bold, design: .default))
+                        .frame(width: 60, height: 60)
+                        .background(.gray)
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                        .isHidden(selectedIndex?.github.isEmpty ?? true, remove: true)
+                }
             }
+            .padding(20)
         }
         .navigationBarTitleDisplayMode(.inline)
     }
 }
 
-struct ScreenView_Previews: PreviewProvider {
-    static var previews: some View {
-        ScreenView()
-    }
-}
+//struct ScreenView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ScreenView()
+//    }
+//}
