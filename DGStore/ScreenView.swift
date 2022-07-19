@@ -9,11 +9,11 @@ import SwiftUI
 import SVGView
 
 struct ScreenView: View {
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: 0) {
             ZStack {
-                //Image(selectedIndex["image"]!)
-                Image("Geunho")
+                Image(selectedIndex!.thumb)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .blur(radius: 3)
@@ -29,11 +29,9 @@ struct ScreenView: View {
                             .fill(.white)
                             .frame(width: 100, height: 3)
                     Spacer()
-                    //Text(selectedIndex["title"]!)
-                    Text("Rolling Root")
+                    Text(selectedIndex!.title)
                         .font(.system(size: 40, weight: .bold, design: .default))
-                    //Text(selectedIndex["developer"]!)
-                    Text("406SOFT")
+                    Text(selectedIndex!.developer)
                         .font(.system(size: 15))
                     Spacer()
                 }
@@ -42,8 +40,7 @@ struct ScreenView: View {
                 .foregroundColor(.white)
             }
             VStack(alignment: .leading) {
-                //Text(selectedIndex["description"]!)
-                Text("롤링 루트는 406SOFT에서 제작한 게임입니다.\n\n아이스크림을 피해 알맞은 타이밍에 점프만 하면 되는 단순한 게임이죠.\n\n하지만 얕보지 마세요. 당신은 무조건 짜증을 한번이라도 낼 것이니까요.")
+                Text(selectedIndex!.description)
                     .lineLimit(50)
                     .multilineTextAlignment(.leading)
                     .fixedSize(horizontal: false, vertical: true)
@@ -51,25 +48,35 @@ struct ScreenView: View {
             }
             .padding(20)
             HStack {
-                Link(destination: URL(string: selectedIndex?.download.ios ?? "")!) {
-                    Text("다운로드")
+                Link(destination: URL(string: selectedIndex?.download.ios ?? "https://github.com/") ?? URL(string: "https://github.com/")!) {
+                    Text(selectedIndex?.download.ios.isEmpty ?? true ? "미지원" : "다운로드")
                         .font(.system(size: 20, weight: .bold, design: .default))
                         .frame(maxWidth: .infinity)
                         .frame(height: 60)
                         .background(Color.accentColor)
-                        .foregroundColor(Color(.systemBackground))
+                        .foregroundColor(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 24))
-                        .isHidden(selectedIndex?.download.ios.isEmpty ?? true, remove: true)
                 }
-                Link(destination: URL(string: selectedIndex?.github ?? "")!) {
+                .disabled(selectedIndex?.download.ios.isEmpty ?? true)
+                Spacer()
+                Link(destination: URL(string: selectedIndex?.github ?? "https://github.com/") ?? URL(string: "https://github.com/")!) {
                     SVGView(contentsOf: URL(string: "https://simpleicons.org/icons/github.svg")!)
                         .frame(width: 30)
                         .colorInvert()
                         .font(.system(size: 20, weight: .bold, design: .default))
                         .frame(width: 60, height: 60)
-                        .background(.gray)
+                        .background(Color(.label))
                         .clipShape(RoundedRectangle(cornerRadius: 24))
-                        .isHidden(selectedIndex?.github.isEmpty ?? true, remove: true)
+                        .isHidden(selectedIndex?.github.isEmpty ?? true || colorScheme == .dark, remove: true)
+                }
+                Link(destination: URL(string: selectedIndex?.github ?? "https://github.com/") ?? URL(string: "https://github.com/")!) {
+                    SVGView(contentsOf: URL(string: "https://simpleicons.org/icons/github.svg")!)
+                        .frame(width: 30)
+                        .font(.system(size: 20, weight: .bold, design: .default))
+                        .frame(width: 60, height: 60)
+                        .background(Color(.label))
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                        .isHidden(selectedIndex?.github.isEmpty ?? true || colorScheme != .dark, remove: true)
                 }
             }
             .padding(20)
