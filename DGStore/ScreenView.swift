@@ -8,13 +8,25 @@
 import SwiftUI
 
 struct ScreenView: View {
+    @State var swTitle: String
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading) {
+            Image("Geunho")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(height: 190)
+                .frame(maxWidth: .infinity)
+                .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
+            Text("Rolling Root")
+                .font(.system(size: 40, weight: .bold, design: .default))
+                .padding(20)
+            Spacer()
+        }
     }
 }
 
 struct ScreenView_Previews: PreviewProvider {
     static var previews: some View {
-        ScreenView()
+        ScreenView(swTitle: "Rolling Root")
     }
 }
