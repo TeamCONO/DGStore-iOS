@@ -8,7 +8,16 @@
 import SwiftUI
 import SVGView
 
+extension View {
+    @ViewBuilder func isHidden(_ hidden: Bool, remove: Bool = false) -> some View {
+        if hidden {
+            if !remove { self.hidden() }
+        } else { self }
+    }
+}
+
 struct ContentView: View {
+    @Environment(\.colorScheme) var colorScheme
     @State private var showModal = false
     @State var itemList = [[String: String]]()
     @State private var searchText = ""
@@ -33,6 +42,11 @@ struct ContentView: View {
                                 Spacer()
                                 SVGView(contentsOf: URL(string: "https://simpleicons.org/icons/\(value["framework"]!).svg")!)
                                     .frame(width: 30)
+                                    .isHidden(colorScheme == .dark, remove: true)
+                                SVGView(contentsOf: URL(string: "https://simpleicons.org/icons/\(value["framework"]!).svg")!)
+                                    .frame(width: 30)
+                                    .colorInvert()
+                                    .isHidden(colorScheme != .dark, remove: true)
                             }
                             .foregroundColor(Color(.label))
                             .padding(EdgeInsets(top: 15, leading: 20, bottom: 17, trailing: 20))
@@ -50,11 +64,12 @@ struct ContentView: View {
                     }
                 }
             }
-            .searchable(text: $searchText)
+            .searchable(text: $searchText, prompt: "검색")
             .navigationBarTitle("스토어")
             .refreshable { print("refreshed") }
             .listStyle(PlainListStyle())
                 .onAppear {
+                    UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "취소"
                     itemList.append([
                         "title": "Rolling Root",
                         "developer": "406SOFT",
