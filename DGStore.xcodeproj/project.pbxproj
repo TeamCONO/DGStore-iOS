@@ -17,6 +17,7 @@
 		932EE5D92885A0540040A00B /* DGStoreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932EE5D82885A0540040A00B /* DGStoreUITests.swift */; };
 		932EE5DB2885A0540040A00B /* DGStoreUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932EE5DA2885A0540040A00B /* DGStoreUITestsLaunchTests.swift */; };
 		936241B92886224D0086023D /* ScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936241B82886224D0086023D /* ScreenView.swift */; };
+		93D6DAD828866D5C005626C5 /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = 93D6DAD728866D5C005626C5 /* SVGView */; };
 		CC4307BCD6A5C7DFE1A8BDED /* Pods_DGStore_DGStoreUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 165BEA1C4C2270A123041907 /* Pods_DGStore_DGStoreUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93D6DAD828866D5C005626C5 /* SVGView in Frameworks */,
 				4071312DB812D1648AD53A5E /* Pods_DGStore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,6 +191,7 @@
 			);
 			name = DGStore;
 			packageProductDependencies = (
+				93D6DAD728866D5C005626C5 /* SVGView */,
 			);
 			productName = DGStore;
 			productReference = 932EE5BA2885A0540040A00B /* DGStore.app */;
@@ -266,6 +269,7 @@
 			);
 			mainGroup = 932EE5B12885A0540040A00B;
 			packageReferences = (
+				93D6DAD628866D5C005626C5 /* XCRemoteSwiftPackageReference "SVGView" */,
 			);
 			productRefGroup = 932EE5BB2885A0540040A00B /* Products */;
 			projectDirPath = "";
@@ -747,6 +751,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		93D6DAD628866D5C005626C5 /* XCRemoteSwiftPackageReference "SVGView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/SVGView.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		93D6DAD728866D5C005626C5 /* SVGView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 93D6DAD628866D5C005626C5 /* XCRemoteSwiftPackageReference "SVGView" */;
+			productName = SVGView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 932EE5B22885A0540040A00B /* Project object */;
 }

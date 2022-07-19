@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SVGView
 
 struct ContentView: View {
     @State private var showModal = false
@@ -33,26 +34,28 @@ struct ContentView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 24))
                  */
                 ForEach(itemList, id: \.self) { value in
-                    VStack(spacing: 0) {
-                        Image(value["image"]!)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(height: 190)
-                            .clipped()
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(value["title"]!)
-                                    .font(.system(size: 20, weight: .bold, design: .default))
-                                Text(value["developer"]!)
-                                    .font(.system(size: 10))
+                    Button(action: { showModal = true }) {
+                        VStack(spacing: 0) {
+                            Image(value["image"]!)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(height: 190)
+                                .clipped()
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(value["title"]!)
+                                        .font(.system(size: 20, weight: .bold, design: .default))
+                                    Text(value["developer"]!)
+                                        .font(.system(size: 10))
+                                }
+                                Spacer()
+                                SVGView(contentsOf: URL(string: "https://simpleicons.org/icons/\(value["framework"]!).svg")!)
+                                    .frame(width: 30)
                             }
-                            Spacer()
-                            Text(value["platform"]!)
+                            .foregroundColor(Color(.label))
+                            .padding(EdgeInsets(top: 15, leading: 20, bottom: 17, trailing: 20))
                         }
-                        .foregroundColor(Color(.label))
-                        .padding(EdgeInsets(top: 15, leading: 20, bottom: 17, trailing: 20))
                     }
-                    .onTapGesture{ showModal = true }
                     .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 24))
                     .padding(EdgeInsets(top: 10, leading: 20, bottom: 0, trailing: 20))
@@ -69,13 +72,19 @@ struct ContentView: View {
                         "title": "Rolling Root",
                         "developer": "406SOFT",
                         "image": "Geunho",
-                        "platform": "iOS",
+                        "framework": "unity",
                     ])
                     itemList.append([
                         "title": "도담도담",
                         "developer": "B1ND",
                         "image": "Dodam",
-                        "platform": "iOS",
+                        "framework": "javascript",
+                    ])
+                    itemList.append([
+                        "title": "이경태",
+                        "developer": "None",
+                        "image": "KT",
+                        "framework": "unity",
                     ])
             }
         }
