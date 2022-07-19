@@ -16,35 +16,38 @@ extension View {
     }
 }
 
+public var selectedIndex = [String: String]()
 struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
+    @State private var showModal = false
     @State var itemList = [[String: String]]()
     @State private var searchText = ""
     var body: some View {
         NavigationView {
             List {
-                ForEach(viewList, id: \.self) { value in
-                    ZStack {
-                    NavigationLink(destination: ScreenView(swTitle: "a")) { }
-                    .opacity(0)
+                ForEach(0..<viewList.count, id: \.self) { i in
+                    Button(action: {
+                        selectedIndex = itemList[i]
+                        showModal = true
+                    }) {
                         VStack(spacing: 0) {
-                            Image(value["image"]!)
+                            Image(viewList[i]["image"]!)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(height: 190)
                                 .clipped()
                             HStack {
                                 VStack(alignment: .leading) {
-                                    Text(value["title"]!)
+                                    Text(viewList[i]["title"]!)
                                         .font(.system(size: 20, weight: .bold, design: .default))
-                                    Text(value["developer"]!)
+                                    Text(viewList[i]["developer"]!)
                                         .font(.system(size: 10))
                                 }
                                 Spacer()
-                                SVGView(contentsOf: URL(string: "https://simpleicons.org/icons/\(value["framework"]!).svg")!)
+                                SVGView(contentsOf: URL(string: "https://simpleicons.org/icons/\(viewList[i]["framework"]!).svg")!)
                                     .frame(width: 30)
                                     .isHidden(colorScheme == .dark, remove: true)
-                                SVGView(contentsOf: URL(string: "https://simpleicons.org/icons/\(value["framework"]!).svg")!)
+                                SVGView(contentsOf: URL(string: "https://simpleicons.org/icons/\(viewList[i]["framework"]!).svg")!)
                                     .frame(width: 30)
                                     .colorInvert()
                                     .isHidden(colorScheme != .dark, remove: true)
@@ -53,7 +56,6 @@ struct ContentView: View {
                             .padding(EdgeInsets(top: 15, leading: 20, bottom: 17, trailing: 20))
                         }
                     }
-                    .buttonStyle(PlainButtonStyle())
                     .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 24))
                     .padding(EdgeInsets(top: 10, leading: 20, bottom: 15, trailing: 20))
@@ -61,32 +63,35 @@ struct ContentView: View {
                     .listRowInsets(.init())
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
+                    .sheet(isPresented: self.$showModal) {
+                        ScreenView()
+                    }
                 }
             }
             .searchable(text: $searchText, prompt: "검색")
             .navigationBarTitle("스토어")
             .refreshable { print("refreshed") }
             .listStyle(PlainListStyle())
-                .onAppear {
-                    UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "취소"
-                    itemList.append([
-                        "title": "Rolling Root",
-                        "developer": "406SOFT",
-                        "image": "Geunho",
-                        "framework": "unity",
-                    ])
-                    itemList.append([
-                        "title": "도담도담",
-                        "developer": "B1ND",
-                        "image": "Dodam",
-                        "framework": "javascript",
-                    ])
-                    itemList.append([
-                        "title": "이경태",
-                        "developer": "None",
-                        "image": "KT",
-                        "framework": "android",
-                    ])
+            .onAppear {
+                UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "취소"
+                itemList.append([
+                    "title": "Rolling Root",
+                    "developer": "406SOFT",
+                    "image": "Geunho",
+                    "framework": "unity",
+                ])
+                itemList.append([
+                    "title": "도담도담",
+                    "developer": "B1ND",
+                    "image": "Dodam",
+                    "framework": "javascript",
+                ])
+                itemList.append([
+                    "title": "이경태",
+                    "developer": "None",
+                    "image": "KT",
+                    "framework": "android",
+                ])
             }
         }
     }
