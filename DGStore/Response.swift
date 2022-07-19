@@ -8,7 +8,7 @@
 import Foundation
 
 public struct serverData: Decodable {
-    let data: [dataArray]
+    let list: [dataArray]
 }
 
 public struct dataArray: Decodable {

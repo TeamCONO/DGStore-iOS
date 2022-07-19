@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Alamofire
-import SwiftyJSON
 import SVGView
 
 extension View {
@@ -21,10 +20,9 @@ extension View {
 public var selectedIndex: dataArray?
 struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
-    @State private var showModal: Bool = false
-    //    @State var itemList = [[String: String]]()
-    @State var itemList: Array<dataArray> = [dataArray]()
-    @State private var searchText: String = ""
+    @State private var showModal = false
+    @State private var searchText = ""
+    @State var itemList = [dataArray]()
     let decoder: JSONDecoder = JSONDecoder()
     var viewList: [dataArray] {
         if searchText.isEmpty { return itemList }
@@ -44,23 +42,23 @@ struct ContentView: View {
                         showModal = true
                     }) {
                         VStack(spacing: 0) {
-                            Image(viewList[i]["image"]!)
+                            Image(viewList[i].image)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(height: 190)
                                 .clipped()
                             HStack {
                                 VStack(alignment: .leading) {
-                                    Text(viewList[i]["title"]!)
+                                    Text(viewList[i].title)
                                         .font(.system(size: 20, weight: .bold, design: .default))
-                                    Text(viewList[i]["developer"]!)
+                                    Text(viewList[i].developer)
                                         .font(.system(size: 10))
                                 }
                                 Spacer()
-                                SVGView(contentsOf: URL(string: "https://simpleicons.org/icons/\(viewList[i]["framework"]!).svg")!)
+                                SVGView(contentsOf: URL(string: "https://simpleicons.org/icons/\(viewList[i].framework).svg")!)
                                     .frame(width: 30)
                                     .isHidden(colorScheme == .dark, remove: true)
-                                SVGView(contentsOf: URL(string: "https://simpleicons.org/icons/\(viewList[i]["framework"]!).svg")!)
+                                SVGView(contentsOf: URL(string: "https://simpleicons.org/icons/\(viewList[i].framework).svg")!)
                                     .frame(width: 30)
                                     .colorInvert()
                                     .isHidden(colorScheme != .dark, remove: true)
@@ -85,19 +83,17 @@ struct ContentView: View {
             .navigationBarTitle("스토어")
             .refreshable { print("refreshed") }
             .listStyle(PlainListStyle())
-        }
-        .onAppear {
-            UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "취소"
-            try? AF.request("", method: .get, encoding: URLEncoding.default).responseData {
-                guard let value = $0.value else { return }
-                guard let result = try? decoder.decode(serverData.self, from: value) else { return }
-                
-                self.itemList = result.data
+            .onAppear {
+                UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "취소"
+                try? AF.request("http://127.0.0.1:80/data", method: .get, encoding: URLEncoding.default).responseData {
+                    guard let value = $0.value else { return }
+                    guard let result = try? decoder.decode(serverData.self, from: value) else { return }
+                    self.itemList = result.list
+                }
             }
         }
     }
 }
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
