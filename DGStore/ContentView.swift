@@ -18,14 +18,15 @@ extension View {
 
 struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
-    @State private var showModal = false
     @State var itemList = [[String: String]]()
     @State private var searchText = ""
     var body: some View {
         NavigationView {
             List {
                 ForEach(viewList, id: \.self) { value in
-                    Button(action: { showModal = true }) {
+                    ZStack {
+                    NavigationLink(destination: ScreenView(swTitle: "a")) { }
+                    .opacity(0)
                         VStack(spacing: 0) {
                             Image(value["image"]!)
                                 .resizable()
@@ -52,6 +53,7 @@ struct ContentView: View {
                             .padding(EdgeInsets(top: 15, leading: 20, bottom: 17, trailing: 20))
                         }
                     }
+                    .buttonStyle(PlainButtonStyle())
                     .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 24))
                     .padding(EdgeInsets(top: 10, leading: 20, bottom: 15, trailing: 20))
@@ -59,9 +61,6 @@ struct ContentView: View {
                     .listRowInsets(.init())
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
-                    .sheet(isPresented: self.$showModal) {
-                        ScreenView(swTitle: "도담도담")
-                    }
                 }
             }
             .searchable(text: $searchText, prompt: "검색")
