@@ -16,6 +16,7 @@
 		932EE5CF2885A0540040A00B /* DGStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932EE5CE2885A0540040A00B /* DGStoreTests.swift */; };
 		932EE5D92885A0540040A00B /* DGStoreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932EE5D82885A0540040A00B /* DGStoreUITests.swift */; };
 		932EE5DB2885A0540040A00B /* DGStoreUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932EE5DA2885A0540040A00B /* DGStoreUITestsLaunchTests.swift */; };
+		933980BC2886ED8C000BCC92 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933980BB2886ED8C000BCC92 /* Response.swift */; };
 		936241B92886224D0086023D /* ScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936241B82886224D0086023D /* ScreenView.swift */; };
 		93D6DAD828866D5C005626C5 /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = 93D6DAD728866D5C005626C5 /* SVGView */; };
 		CC4307BCD6A5C7DFE1A8BDED /* Pods_DGStore_DGStoreUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 165BEA1C4C2270A123041907 /* Pods_DGStore_DGStoreUITests.framework */; };
@@ -56,6 +57,7 @@
 		932EE5D42885A0540040A00B /* DGStoreUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DGStoreUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		932EE5D82885A0540040A00B /* DGStoreUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGStoreUITests.swift; sourceTree = "<group>"; };
 		932EE5DA2885A0540040A00B /* DGStoreUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGStoreUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		933980BB2886ED8C000BCC92 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		936241B82886224D0086023D /* ScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenView.swift; sourceTree = "<group>"; };
 		C5AB025DAACF42962472D6C8 /* Pods-DGStore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DGStore.debug.xcconfig"; path = "Target Support Files/Pods-DGStore/Pods-DGStore.debug.xcconfig"; sourceTree = "<group>"; };
 		CF70BD70BDD86FFBB9EC81FB /* Pods-DGStore-DGStoreUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DGStore-DGStoreUITests.debug.xcconfig"; path = "Target Support Files/Pods-DGStore-DGStoreUITests/Pods-DGStore-DGStoreUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				932EE5BD2885A0540040A00B /* DGStoreApp.swift */,
 				932EE5BF2885A0540040A00B /* ContentView.swift */,
 				936241B82886224D0086023D /* ScreenView.swift */,
+				933980BB2886ED8C000BCC92 /* Response.swift */,
 				932EE5C12885A0540040A00B /* Assets.xcassets */,
 				932EE5C32885A0540040A00B /* Preview Content */,
 			);
@@ -416,6 +419,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				933980BC2886ED8C000BCC92 /* Response.swift in Sources */,
 				936241B92886224D0086023D /* ScreenView.swift in Sources */,
 				932EE5C02885A0540040A00B /* ContentView.swift in Sources */,
 				932EE5BE2885A0540040A00B /* DGStoreApp.swift in Sources */,

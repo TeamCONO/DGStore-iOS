@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Alamofire
+import SwiftyJSON
 import SVGView
 
 extension View {
@@ -16,12 +18,23 @@ extension View {
     }
 }
 
-public var selectedIndex = [String: String]()
+public var selectedIndex: dataArray?
 struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
-    @State private var showModal = false
-    @State var itemList = [[String: String]]()
-    @State private var searchText = ""
+    @State private var showModal: Bool = false
+    //    @State var itemList = [[String: String]]()
+    @State var itemList: Array<dataArray> = [dataArray]()
+    @State private var searchText: String = ""
+    let decoder: JSONDecoder = JSONDecoder()
+    var viewList: [dataArray] {
+        if searchText.isEmpty { return itemList }
+        else {
+            return itemList.filter {
+                $0.title.contains(searchText) ||
+                $0.developer.contains(searchText)
+            }
+        }
+    }
     var body: some View {
         NavigationView {
             List {
@@ -72,40 +85,19 @@ struct ContentView: View {
             .navigationBarTitle("스토어")
             .refreshable { print("refreshed") }
             .listStyle(PlainListStyle())
-            .onAppear {
-                UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "취소"
-                itemList.append([
-                    "title": "Rolling Root",
-                    "developer": "406SOFT",
-                    "image": "Geunho",
-                    "framework": "unity",
-                ])
-                itemList.append([
-                    "title": "도담도담",
-                    "developer": "B1ND",
-                    "image": "Dodam",
-                    "framework": "javascript",
-                ])
-                itemList.append([
-                    "title": "이경태",
-                    "developer": "None",
-                    "image": "KT",
-                    "framework": "android",
-                ])
-            }
         }
-    }
-    
-    var viewList: [[String: String]] {
-        if searchText.isEmpty { return itemList }
-        else {
-            return itemList.filter {
-                $0["title"]!.contains(searchText) ||
-                $0["developer"]!.contains(searchText)
+        .onAppear {
+            UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "취소"
+            try? AF.request("", method: .get, encoding: URLEncoding.default).responseData {
+                guard let value = $0.value else { return }
+                guard let result = try? decoder.decode(serverData.self, from: value) else { return }
+                
+                self.itemList = result.data
             }
         }
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
