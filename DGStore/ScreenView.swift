@@ -17,7 +17,7 @@ struct ScreenView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             ZStack {
-                Image(selectedIndex!.thumb)
+                Image(uiImage: UIImage(base64: selectedIndex!.thumb, withPrefix: true)!)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .blur(radius: 3)
@@ -47,6 +47,7 @@ struct ScreenView: View {
                 Text(selectedIndex!.description)
                     .lineLimit(50)
                     .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .fixedSize(horizontal: false, vertical: true)
                 Spacer()
             }
