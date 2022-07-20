@@ -12,6 +12,22 @@ func encodeURL(url: String) -> URL {
     return URL(string: url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) ?? URL(string: "https://github.com/")!
 }
 
+func encodeType(original: [downloadDatas]) -> Bool {
+    var result = true
+    original.forEach {
+        if($0.platformType == "ios") { result = false }
+    }
+    return result
+}
+
+func encodeTyper(original: [downloadDatas]) -> String {
+    var result = "https://github.com/"
+    original.forEach {
+        if($0.platformType == "ios") { result = $0.fileName }
+    }
+    return result
+}
+
 struct ScreenView: View {
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
@@ -53,8 +69,8 @@ struct ScreenView: View {
             }
             .padding(20)
             HStack {
-                Link(destination: encodeURL(url: selectedIndex?.download.ios ?? "https://github.com/")) {
-                    Text(selectedIndex?.download.ios.isEmpty ?? true ? "미지원" : "다운로드")
+                Link(destination: encodeURL(url: encodeTyper(original: selectedIndex!.downloads))) {
+                    Text(encodeType(original: selectedIndex!.downloads) ? "미지원" : "다운로드")
                         .font(.system(size: 20, weight: .bold, design: .default))
                         .frame(maxWidth: .infinity)
                         .frame(height: 60)
@@ -62,7 +78,7 @@ struct ScreenView: View {
                         .foregroundColor(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 24))
                 }
-                .disabled(selectedIndex?.download.ios.isEmpty ?? true)
+                .disabled(encodeType(original: selectedIndex!.downloads))
                 Spacer()
                     .isHidden(selectedIndex?.github.isEmpty ?? true, remove: true)
                 Link(destination: encodeURL(url: selectedIndex?.github ?? "https://github.com/")) {

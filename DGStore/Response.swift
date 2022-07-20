@@ -19,13 +19,10 @@ public struct dataArray: Decodable {
     let thumb: String
     let framework: String
     let github: String
-    let download: downloadDatas
+    let downloads: [downloadDatas]
 }
 
 public struct downloadDatas: Decodable {
-    let windows: String
-    let macos: String
-    let linux: String
-    let android: String
-    let ios: String
+    let fileName: String
+    let platformType: String
 }
