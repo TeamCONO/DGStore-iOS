@@ -8,6 +8,10 @@
 import SwiftUI
 import SVGView
 
+func encodeURL(url: String) -> URL {
+    return URL(string: url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) ?? URL(string: "https://github.com/")!
+}
+
 struct ScreenView: View {
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
@@ -48,7 +52,7 @@ struct ScreenView: View {
             }
             .padding(20)
             HStack {
-                Link(destination: URL(string: selectedIndex?.download.ios ?? "https://github.com/") ?? URL(string: "https://github.com/")!) {
+                Link(destination: encodeURL(url: selectedIndex?.download.ios ?? "https://github.com/")) {
                     Text(selectedIndex?.download.ios.isEmpty ?? true ? "미지원" : "다운로드")
                         .font(.system(size: 20, weight: .bold, design: .default))
                         .frame(maxWidth: .infinity)
@@ -60,7 +64,7 @@ struct ScreenView: View {
                 .disabled(selectedIndex?.download.ios.isEmpty ?? true)
                 Spacer()
                     .isHidden(selectedIndex?.github.isEmpty ?? true, remove: true)
-                Link(destination: URL(string: selectedIndex?.github ?? "https://github.com/") ?? URL(string: "https://github.com/")!) {
+                Link(destination: encodeURL(url: selectedIndex?.github ?? "https://github.com/")) {
                     SVGView(contentsOf: URL(string: "https://simpleicons.org/icons/github.svg")!)
                         .frame(width: 30)
                         .colorInvert()
@@ -70,7 +74,7 @@ struct ScreenView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 24))
                         .isHidden(selectedIndex?.github.isEmpty ?? true || colorScheme == .dark, remove: true)
                 }
-                Link(destination: URL(string: selectedIndex?.github ?? "https://github.com/") ?? URL(string: "https://github.com/")!) {
+                Link(destination: encodeURL(url: selectedIndex?.github ?? "https://github.com/")) {
                     SVGView(contentsOf: URL(string: "https://simpleicons.org/icons/github.svg")!)
                         .frame(width: 30)
                         .font(.system(size: 20, weight: .bold, design: .default))
