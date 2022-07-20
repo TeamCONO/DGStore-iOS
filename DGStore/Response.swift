@@ -9,6 +9,7 @@ import Foundation
 
 public struct serverData: Decodable {
     let list: [dataArray]
+    let page_size: Int
 }
 
 public struct dataArray: Decodable {

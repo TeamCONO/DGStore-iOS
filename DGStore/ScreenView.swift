@@ -59,6 +59,7 @@ struct ScreenView: View {
                 }
                 .disabled(selectedIndex?.download.ios.isEmpty ?? true)
                 Spacer()
+                    .isHidden(selectedIndex?.github.isEmpty ?? true, remove: true)
                 Link(destination: URL(string: selectedIndex?.github ?? "https://github.com/") ?? URL(string: "https://github.com/")!) {
                     SVGView(contentsOf: URL(string: "https://simpleicons.org/icons/github.svg")!)
                         .frame(width: 30)
