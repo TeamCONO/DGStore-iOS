@@ -104,7 +104,7 @@ struct ContentView: View {
             .searchable(text: $searchText, prompt: "검색")
             .navigationBarTitle("스토어")
             .refreshable {
-                try? AF.request("http://127.0.0.1:80/data", method: .get, encoding: URLEncoding.default).responseData {
+                try? AF.request("http://192.168.0.21:5877/items/", method: .get, encoding: URLEncoding.default).responseData {
                     guard let value = $0.value else { return }
                     guard let result = try? decoder.decode(serverData.self, from: value) else { return }
                     self.itemList = result.list
@@ -113,7 +113,7 @@ struct ContentView: View {
             .listStyle(PlainListStyle())
             .onAppear {
                 UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "취소"
-                try? AF.request("http://127.0.0.1:80/data", method: .get, encoding: URLEncoding.default).responseData {
+                try? AF.request("http://192.168.0.21:5877/items/", method: .get, encoding: URLEncoding.default).responseData {
                     guard let value = $0.value else { return }
                     guard let result = try? decoder.decode(serverData.self, from: value) else { return }
                     self.itemList = result.list
